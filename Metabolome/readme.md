@@ -143,5 +143,5 @@ Figure_4A
 ggsave(file="Metabolome/Figures/Figure_4A.svg", plot=Figure_4A, width=6.5, height=6.5)
 ```
 
-![This is an image](https://myoctocat.com/assets/images/base-octocat.svg](Metabolome/Figures/Figure_4A.png)
+![This is an image](Metabolome/Figures/Figure_4A.png)
 
