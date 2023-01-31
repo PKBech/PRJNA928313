@@ -144,5 +144,5 @@ ggsave(file="Metabolome/Figures/Figure_4A.svg", plot=Figure_4A, width=6.5, heigh
 
 ```
 
-![Venn diagram with features distributed between the three successional phases]([Metabolome/Figures/Figure_4A.png](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4A.png)
+![Venn diagram with features distributed between the three successional phases](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4A.png)
 
