@@ -105,7 +105,7 @@ Phylo_metabolome <- subset_samples(Phylo_metabolome, sample_name_2 %in% rownames
 
 ```
 ### Venn diagram 
-
+```
 Phylo_metabolome_dat <- data.frame(t(otu_table(Phylo_metabolome)))
 Phylo_metabolome_dat$sample_name_2 <- rownames(Phylo_metabolome_dat)
 Phylo_metabolome_metadat <- data.frame(sample_data(Phylo_metabolome))
@@ -141,6 +141,7 @@ Figure_4A <- ggvenn(
 Figure_4A
 
 ggsave(file="Metabolome/Figures/Figure_4A.svg", plot=Figure_4A, width=6.5, height=6.5)
+
 ```
 
 ![This is an image](Metabolome/Figures/Figure_4A.png)
