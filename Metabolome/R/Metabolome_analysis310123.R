@@ -103,6 +103,7 @@ Phylo_metabolome <- subset_samples(Phylo_metabolome, sample_name_2 %in% rownames
 
 dim(as.data.frame(tax_table(Phylo_metabolome)))[1]
 
+##Distribution of the different NPC pathways across the metabolome
 as.data.frame(tax_table(Phylo_metabolome)) %>% 
   dplyr::group_by(NPC.pathway) %>% 
   dplyr::summarise(total = n()) %>%
