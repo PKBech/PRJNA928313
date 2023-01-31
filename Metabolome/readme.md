@@ -268,6 +268,186 @@ ggsave(file="Metabolome/Figures/Figure_4B.svg", plot=PCoA.metabolome.plot, width
 Beta-diversity
 ![PCoA](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4B.png)
 
+### Alpha-diversity divided by NPC pathway
+```
+#Alpha-diversity #####
+Observed_total_metabolome_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome)) ))))) #estimate richness
+colnames(Observed_total_metabolome_dat)[1] <- "Obs_features"
+Observed_total_metabolome_dat <- Observed_total_metabolome_dat[-c(2:5)]
+Observed_total_metabolome_dat$NPC.pathway <- rep("All NPC Pathway groups")
+Observed_total_metabolome_dat$sample_name_2 <- rownames(Observed_total_metabolome_dat)
+Observed_total_metabolome_dat <- left_join(Observed_total_metabolome_dat, data.frame(sample_data(Phylo_metabolome)))
+
+#Alkaloids
+Phylo_metabolome_Alkaloids <- subset_taxa(Phylo_metabolome, NPC.pathway == "Alkaloids")
+
+Observed_metabolome_Alkaloids_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome_Alkaloids)) ))))) #estimate richness
+colnames(Observed_metabolome_Alkaloids_dat)[1] <- "Obs_features"
+Observed_metabolome_Alkaloids_dat <- Observed_metabolome_Alkaloids_dat[-c(2:5)]
+Observed_metabolome_Alkaloids_dat$NPC.pathway <- rep("Alkaloids")
+Observed_metabolome_Alkaloids_dat$sample_name_2 <- rownames(Observed_metabolome_Alkaloids_dat)
+Observed_metabolome_Alkaloids_dat <- left_join(Observed_metabolome_Alkaloids_dat, data.frame(sample_data(Phylo_metabolome)))
+
+
+#Amino_acids_and_Peptides
+Phylo_metabolome_Amino_acids_and_Peptides <- subset_taxa(Phylo_metabolome, NPC.pathway == "Amino acids and Peptides")
+
+Observed_metabolome_Amino_acids_and_Peptides_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome_Amino_acids_and_Peptides)) ))))) #estimate richness
+colnames(Observed_metabolome_Amino_acids_and_Peptides_dat)[1] <- "Obs_features"
+Observed_metabolome_Amino_acids_and_Peptides_dat <- Observed_metabolome_Amino_acids_and_Peptides_dat[-c(2:5)]
+Observed_metabolome_Amino_acids_and_Peptides_dat$NPC.pathway <- rep("Amino acids and Peptides")
+Observed_metabolome_Amino_acids_and_Peptides_dat$sample_name_2 <- rownames(Observed_metabolome_Amino_acids_and_Peptides_dat)
+Observed_metabolome_Amino_acids_and_Peptides_dat <- left_join(Observed_metabolome_Amino_acids_and_Peptides_dat, data.frame(sample_data(Phylo_metabolome)))
+
+
+#Fatty_acids
+# Phylo_metabolome_Fatty_acids <- subset_taxa(Phylo_metabolome, NPC.pathway == "Fatty acids")
+# 
+# Observed_metabolome_Fatty_acids_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome_Fatty_acids)) ))))) #estimate richness
+# colnames(Observed_metabolome_Fatty_acids_dat)[1] <- "Obs_features"
+# Observed_metabolome_Fatty_acids_dat <- Observed_metabolome_Fatty_acids_dat[-c(2:5)]
+# Observed_metabolome_Fatty_acids_dat$NPC.pathway <- rep("Fatty acids")
+# Observed_metabolome_Fatty_acids_dat$sample_name_2 <- rownames(Observed_metabolome_Fatty_acids_dat)
+# Observed_metabolome_Fatty_acids_dat <- left_join(Observed_metabolome_Fatty_acids_dat, data.frame(sample_data(Phylo_metabolome)))
+# 
+
+#Polyketides
+Phylo_metabolome_Polyketides <- subset_taxa(Phylo_metabolome, NPC.pathway == "Polyketides")
+
+Observed_metabolome_Polyketides_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome_Polyketides)) ))))) #estimate richness
+colnames(Observed_metabolome_Polyketides_dat)[1] <- "Obs_features"
+Observed_metabolome_Polyketides_dat <- Observed_metabolome_Polyketides_dat[-c(2:5)]
+Observed_metabolome_Polyketides_dat$NPC.pathway <- rep("Polyketides")
+Observed_metabolome_Polyketides_dat$sample_name_2 <- rownames(Observed_metabolome_Polyketides_dat)
+Observed_metabolome_Polyketides_dat <- left_join(Observed_metabolome_Polyketides_dat, data.frame(sample_data(Phylo_metabolome)))
+
+
+#Shikimates_and_Phenylpropanoids
+Phylo_metabolome_Shikimates_and_Phenylpropanoids <- subset_taxa(Phylo_metabolome, NPC.pathway == "Shikimates and Phenylpropanoids")
+
+Observed_metabolome_Shikimates_and_Phenylpropanoids_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome_Shikimates_and_Phenylpropanoids)) ))))) #estimate richness
+colnames(Observed_metabolome_Shikimates_and_Phenylpropanoids_dat)[1] <- "Obs_features"
+Observed_metabolome_Shikimates_and_Phenylpropanoids_dat <- Observed_metabolome_Shikimates_and_Phenylpropanoids_dat[-c(2:5)]
+Observed_metabolome_Shikimates_and_Phenylpropanoids_dat$NPC.pathway <- rep("Shikimates and Phenylpropanoids")
+Observed_metabolome_Shikimates_and_Phenylpropanoids_dat$sample_name_2 <- rownames(Observed_metabolome_Shikimates_and_Phenylpropanoids_dat)
+Observed_metabolome_Shikimates_and_Phenylpropanoids_dat <- left_join(Observed_metabolome_Shikimates_and_Phenylpropanoids_dat, data.frame(sample_data(Phylo_metabolome)))
+
+
+
+
+
+#Terpenoids
+Phylo_metabolome_Terpenoids <- subset_taxa(Phylo_metabolome, NPC.pathway == "Terpenoids")
+
+Observed_metabolome_Terpenoids_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome_Terpenoids)) ))))) #estimate richness
+colnames(Observed_metabolome_Terpenoids_dat)[1] <- "Obs_features"
+Observed_metabolome_Terpenoids_dat <- Observed_metabolome_Terpenoids_dat[-c(2:5)]
+Observed_metabolome_Terpenoids_dat$NPC.pathway <- rep("Terpenoids")
+Observed_metabolome_Terpenoids_dat$sample_name_2 <- rownames(Observed_metabolome_Terpenoids_dat)
+Observed_metabolome_Terpenoids_dat <- left_join(Observed_metabolome_Terpenoids_dat, data.frame(sample_data(Phylo_metabolome)))
+
+
+
+# Observed_total_metabolome_dat <- rbind(Observed_total_metabolome_dat, Observed_metabolome_Alkaloids_dat, 
+#                                        Observed_metabolome_Amino_acids_and_Peptides_dat, Observed_metabolome_Fatty_acids_dat, 
+#                                        Observed_metabolome_Polyketides_dat, Observed_metabolome_Terpenoids_dat)
+
+Observed_total_metabolome_dat <- rbind(Observed_total_metabolome_dat, Observed_metabolome_Alkaloids_dat, Observed_metabolome_Shikimates_and_Phenylpropanoids_dat,
+                                       Observed_metabolome_Amino_acids_and_Peptides_dat, 
+                                       Observed_metabolome_Polyketides_dat, Observed_metabolome_Terpenoids_dat)
+
+
+
+Observed_total_metabolome_dat$NPC.pathway <- factor(Observed_total_metabolome_dat$NPC.pathway, levels = c("All NPC Pathway groups","Alkaloids","Amino acids and Peptides","Shikimates and Phenylpropanoids","Polyketides","Terpenoids"))
+str(Observed_total_metabolome_dat)
+
+
+#Statistics
+p_Obs.stats = Observed_total_metabolome_dat %>%
+  dplyr::group_by(Day, NPC.pathway,  Phase) %>%
+  dplyr::summarise(mean.obs = mean(Obs_features),
+                   sd.obs = sd(Obs_features),
+                   counts = n(), zscore = abs((Obs_features-mean(Obs_features))/sd(Obs_features)))
+
+#Find outliers per NPC.pathway per Day based on z-scores
+
+p_Obs.stats %>% filter(abs(zscore) >= 3)
+
+#Make levels of phase
+p_Obs.stats$Phase = factor(p_Obs.stats$Phase, levels= c("Early", "Peak", "Late"))
+
+library(ggbeeswarm)
+
+main_col <- c("#240785",  "#f21395", "#e0b62b")
+
+Figure_4D <- p_Obs.stats %>% 
+  filter(NPC.pathway =="Amino acids and Peptides") %>% 
+  ggplot(aes(x = Day, y = mean.obs)) + 
+  geom_quasirandom(data = Observed_total_metabolome_dat %>% 
+                     filter(NPC.pathway =="Amino acids and Peptides"), 
+                   aes(y = Obs_features, col = Phase),size = 3, dodge.width=0, alpha = 0.6, stroke = NA) + 
+  geom_errorbar(aes(ymax = mean.obs+sd.obs, ymin = mean.obs-sd.obs, col = Phase), width = 0, linewidth = 0.7, alpha = 0.2) +
+  geom_line(size = 1, alpha = 0.6, col = "black") +
+  labs(x= "\nTime (days)", y = "\n Feature richness \n", 
+       #subtitle = "Biofilm - Metabolome"
+       ) +
+  scale_x_continuous(breaks = c(10,15,23,29,44,57,71,85,99,113))+
+  theme_bw(base_size = 12) +
+  #facet_wrap(.~NPC.pathway, scales = "free_y") +
+  scale_color_manual(values = main_col)+
+  scale_fill_manual(values = main_col) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), legend.position = "right",
+        axis.text.x = element_text(face = "bold", colour ="black", angle = 45, vjust =1, hjust = 0.5),
+        axis.title = element_text(face = "bold", colour ="black", vjust =1),
+        axis.text = element_text(face = "bold", colour ="black"))
+
+Figure_4D
+
+ggsave(file="Metabolome/Figures/Figure_4D.svg", plot=Figure_4D,width=4.9, height=3.5)
+
+
+#Test if late is significant between the days using dunntest
+groups <- unique(Observed_total_metabolome_dat$NPC.pathway)
+
+# Initialize list to store results
+dunnTest_results_perDay <- list()
+
+# Loop through each group
+for (i in 1:length(groups)) {
+  # Subset data for current group
+  group_data <- subset(Observed_total_metabolome_dat, Observed_total_metabolome_dat$NPC.pathway == groups[i])
+  # Perform Dunn test for current group
+  test_result <- dunnTest(Obs_features ~ as.factor(Day), data = group_data, method = "bh")
+  # Store dunnTest_results in list with group name as name if P.adj is less than 0.05
+  dunnTest_results_perDay[[groups[i]]] <- test_result
+  names(dunnTest_results_perDay)[i] <- as.character(groups[i])
+}
+
+data.frame(dunnTest_results_perDay$`Amino acids and Peptides`$res) %>% filter(P.adj < 0.05)
+
+
+#Test multible comparisons differences between the days within each NPC.pathway
+# Get unique groups
+groups <- unique(Observed_total_metabolome_dat$NPC.pathway)
+
+# Initialize list to store results
+dunnTest_results_perDay <- list()
+
+library(FSA)
+
+# Loop through each group
+for (i in 1:length(groups)) {
+  # Subset data for current group
+  group_data <- subset(Observed_total_metabolome_dat, Observed_total_metabolome_dat$NPC.pathway == groups[i])
+  # Perform Dunn test for current group
+  test_result <- dunnTest(Obs_features ~ as.factor(Day), data = group_data, method = "bh")
+  # Store dunnTest_results in list with group name as name if P.adj is less than 0.05
+  dunnTest_results_perDay[[groups[i]]] <- test_result
+  names(dunnTest_results_perDay)[i] <- as.character(groups[i])
+}
+
+data.frame(dunnTest_results_perDay$`Amino acids and Peptides`$res) %>% filter(P.adj < 0.05)
+```
 
 
 
