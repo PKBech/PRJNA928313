@@ -15,7 +15,6 @@ library(ggplot2)
 library( "DESeq2" )
 library(vegan)
 library(venn)
-#library(IMIFA) # Pareto scaling
 
 #Create dataframe, clean-up and phyloseq object#####
 ##Load feature table
