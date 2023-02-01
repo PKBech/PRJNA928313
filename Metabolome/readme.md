@@ -612,7 +612,7 @@ Figure_4C
 ggsave(file="Metabolome/Figures/Figure_4C.svg", plot=Figure_4C, width=11, height=6.5)
 ```
 Significant dominating features in the early/peak phase vs. late phase.
-![PCoA](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4C.png)
+![Mirrored beswarm plot](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4C.png)
 
 Differential analysis of metabolic features dominating the early/peak phase vs the late phase (Kruskal-wallis rank sum test; comparisons with adjusted BH p<0.05 are shown); The LC-MS peak area of each metabolite in samples collected in the early/peak phase (left side; circles) vs. samples collected during the late phase (triangles) coloured by their predicted as NPC pathway. Black errorbars represent standard deviations and circle/triangle the mean peak area of each feature. D) Observed feature counts per day predicted as Amino acids and peptides (>300 m/z).
 
