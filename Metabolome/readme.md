@@ -191,8 +191,10 @@ pcoa_pseudo_counts_clr_euclidean_p =p2 + geom_point(size=7.5) +
 pcoa_pseudo_counts_clr_euclidean_p
 
 
+```
 
-#Beta-disper ####
+### Investigate Beta-dispersion between groups
+```
 ## Calculate multivariate dispersions 
 bdisp_metabolome_pseudo_counts_clr <- betadisper(vegdist(t(Phylo_metabolome_pseudo_counts_clr_dat), "euclidean"), 
                                                  factor(paste(data.frame(sample_data(Phylo_metabolome_pseudo_counts_clr))$Phase,sep=" ")))
@@ -203,19 +205,17 @@ bdisp_metabolome_pseudo_counts_clr_day <- betadisper(vegdist(t(Phylo_metabolome_
                                                  factor(paste(data.frame(sample_data(Phylo_metabolome_pseudo_counts_clr))$Day,sep=" ")))
 
 
-
-## Permutation test for F to test if betadisp is significant
+```
+### Permutation test for F to test if betadisp is significant
+```
 permutest(bdisp_metabolome_pseudo_counts_clr, pairwise = TRUE, permutations = 999)
 permutest(bdisp_metabolome_pseudo_counts_clr_day, pairwise = TRUE, permutations = 999)
+```
 
-
-## Tukey's Honest Significant Differences
+### Tukey's Honest Significant Differences
+```
 bdisp.HSD <- TukeyHSD(bdisp_metabolome_pseudo_counts_clr)
 plot(bdisp.HSD)
-
-##Beta-disper it significant between late vs. early and peak and late.
-#Therefore not sure if the significant different between group running PERMANOVA is
-#caused by the high variance in the late phase or differences explained by time
 
 
 #PERMANOVA (Adonis) #####
@@ -226,9 +226,12 @@ metadata_pseudo_counts_clr_dat_dist_eucledian$Phase <- factor(metadata_pseudo_co
 
 PERMANOVA <- adonis2(Metabolome_pseudo_counts_clr_dat_dist_eucledian ~ Phase * Replicate, metadata_pseudo_counts_clr_dat_dist_eucledian)
 PERMANOVA
+```
+### Due to higher beta-dispersion between samples in the late phase compared to early phase (p-value = 0.002), the significant effect described by the successional phases on metabolome composition (PERMANOVA; R2 = 0.062, p-value = 0.002) may be somewhat attributed to group heterogeneity as well. 
 
 
-#PCOA plot with vegan/betadisper #####
+### PCOA plot with vegan/betadisper
+```
 centroids.metabolome = data.frame(bdisp_metabolome_pseudo_counts_clr$centroids[,1:2])
 centroids.metabolome$Phase = rownames(centroids.metabolome)
 points.metabolome = data.frame(bdisp_metabolome_pseudo_counts_clr$vectors[,1:2], Phase = metadata_pseudo_counts_clr_dat_dist_eucledian$Phase)
@@ -332,10 +335,6 @@ Observed_metabolome_Shikimates_and_Phenylpropanoids_dat$NPC.pathway <- rep("Shik
 Observed_metabolome_Shikimates_and_Phenylpropanoids_dat$sample_name_2 <- rownames(Observed_metabolome_Shikimates_and_Phenylpropanoids_dat)
 Observed_metabolome_Shikimates_and_Phenylpropanoids_dat <- left_join(Observed_metabolome_Shikimates_and_Phenylpropanoids_dat, data.frame(sample_data(Phylo_metabolome)))
 
-
-
-
-
 #Terpenoids
 Phylo_metabolome_Terpenoids <- subset_taxa(Phylo_metabolome, NPC.pathway == "Terpenoids")
 
@@ -425,28 +424,6 @@ for (i in 1:length(groups)) {
 
 data.frame(dunnTest_results_perDay$`Amino acids and Peptides`$res) %>% filter(P.adj < 0.05)
 
-
-#Test multible comparisons differences between the days within each NPC.pathway
-# Get unique groups
-groups <- unique(Observed_total_metabolome_dat$NPC.pathway)
-
-# Initialize list to store results
-dunnTest_results_perDay <- list()
-
-library(FSA)
-
-# Loop through each group
-for (i in 1:length(groups)) {
-  # Subset data for current group
-  group_data <- subset(Observed_total_metabolome_dat, Observed_total_metabolome_dat$NPC.pathway == groups[i])
-  # Perform Dunn test for current group
-  test_result <- dunnTest(Obs_features ~ as.factor(Day), data = group_data, method = "bh")
-  # Store dunnTest_results in list with group name as name if P.adj is less than 0.05
-  dunnTest_results_perDay[[groups[i]]] <- test_result
-  names(dunnTest_results_perDay)[i] <- as.character(groups[i])
-}
-
-data.frame(dunnTest_results_perDay$`Amino acids and Peptides`$res) %>% filter(P.adj < 0.05)
 ```
 
 
