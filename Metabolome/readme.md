@@ -403,9 +403,14 @@ Figure_4D <- p_Obs.stats %>%
 Figure_4D
 
 ggsave(file="Metabolome/Figures/Figure_4D.svg", plot=Figure_4D,width=4.9, height=3.5)
+```
+Alpha-diversity; richness
+![Richness](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4D.png)
 Observed feature counts per day predicted as Amino acids and peptides (>300 m/z).
 
-#Test if late is significant between the days using dunntest
+
+### Test significant differences between the days using dunntest
+```
 groups <- unique(Observed_total_metabolome_dat$NPC.pathway)
 
 # Initialize list to store results
