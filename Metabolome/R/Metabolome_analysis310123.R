@@ -101,7 +101,6 @@ AD_filter_norm_toMetabolome <- read.csv("Metabolome/Data/AD_filter_norm_toMetabo
 rownames(AD_filter_norm_toMetabolome) = AD_filter_norm_toMetabolome$X
 Phylo_metabolome <- subset_samples(Phylo_metabolome, sample_name_2 %in% rownames(AD_filter_norm_toMetabolome)) 
 
-dim(as.data.frame(tax_table(Phylo_metabolome)))[1]
 
 ##Distribution of the different NPC pathways across the metabolome
 as.data.frame(tax_table(Phylo_metabolome)) %>% 
@@ -146,6 +145,8 @@ Figure_4A <- ggvenn(
 Figure_4A
 
 ggsave(file="Metabolome/Figures/Figure_4A.svg", plot=Figure_4A, width=6.5, height=6.5)
+ggsave(file="Metabolome/Figures/Figure_4A.png", plot=Figure_4A, width=6.5, height=6.5)
+
 
 # 
 # tmp <- venn(d, intersection=TRUE)
@@ -196,9 +197,7 @@ Phylo_metabolome_NRPs <- subset_taxa(Phylo_metabolome, NPC.pathway == "Amino aci
 #Zero's across dataset #####
 library(zCompositions)
 
-zPatterns(as.data.frame(otu_table(Phylo_metabolome)), label = 0)
-#zPatterns(as.data.frame(otu_table(Phylo_metabolome_NRPs)), label = 0)
-
+zPatterns_across_all_samples <- zPatterns(as.data.frame(otu_table(Phylo_metabolome)), label = 0)
 
 
 #Clr transformation ####
@@ -322,6 +321,7 @@ PCoA.metabolome.plot <- ggplot(centroids.metabolome, aes(PCoA1, PCoA2, color = P
 PCoA.metabolome.plot
 
 ggsave(file="Metabolome/Figures/Figure_4B.svg", plot=PCoA.metabolome.plot, width=4.9, height=3.5)
+ggsave(file="Metabolome/Figures/Figure_4B.png", plot=PCoA.metabolome.plot, width=4.9, height=3.5)
 
 #Alpha-diversity #####
 Observed_total_metabolome_dat <- data.frame(t(estimateR((round(t(otu_table(Phylo_metabolome)) ))))) #estimate richness
@@ -457,6 +457,7 @@ Figure_4D <- p_Obs.stats %>%
 Figure_4D
 
 ggsave(file="Metabolome/Figures/Figure_4D.svg", plot=Figure_4D,width=4.9, height=3.5)
+ggsave(file="Metabolome/Figures/Figure_4D.png", plot=Figure_4D,width=4.9, height=3.5)
 
 
 #Test if late is significant between the days using dunntest
@@ -685,5 +686,6 @@ Figure_4C <- p_values.stats %>%
 Figure_4C
 
 ggsave(file="Metabolome/Figures/Figure_4C.svg", plot=Figure_4C, width=11, height=6.5)
+ggsave(file="Metabolome/Figures/Figure_4C.png", plot=Figure_4C, width=11, height=6.5)
 
 
