@@ -160,7 +160,10 @@ Phylo_metabolome_NRPs <- subset_taxa(Phylo_metabolome, NPC.pathway == "Amino aci
 ```
 zPatterns(as.data.frame(otu_table(Phylo_metabolome)), label = 0)
 ```
+
 More than 80% zeros are observed across all samples in the metabolome
+![Zeros](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/zPatterns_across_all_samples.png)
+
 
 ### Normalization before beta-diversity analysis
 We use center-log-transformation of the data before counting the distance matrix (Sisk-Hackworth & Kelley 2020; https://doi.org/10.1093/nargab/lqaa079)
