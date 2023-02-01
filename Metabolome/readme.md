@@ -403,7 +403,7 @@ Figure_4D <- p_Obs.stats %>%
 Figure_4D
 
 ggsave(file="Metabolome/Figures/Figure_4D.svg", plot=Figure_4D,width=4.9, height=3.5)
-
+Observed feature counts per day predicted as Amino acids and peptides (>300 m/z).
 
 #Test if late is significant between the days using dunntest
 groups <- unique(Observed_total_metabolome_dat$NPC.pathway)
@@ -614,7 +614,7 @@ ggsave(file="Metabolome/Figures/Figure_4C.svg", plot=Figure_4C, width=11, height
 Significant dominating features in the early/peak phase vs. late phase.
 ![Mirrored beswarm plot](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4C.png)
 
-Differential analysis of metabolic features dominating the early/peak phase vs the late phase (Kruskal-wallis rank sum test; comparisons with adjusted BH p<0.05 are shown); The LC-MS peak area of each metabolite in samples collected in the early/peak phase (left side; circles) vs. samples collected during the late phase (triangles) coloured by their predicted as NPC pathway. Black errorbars represent standard deviations and circle/triangle the mean peak area of each feature. D) Observed feature counts per day predicted as Amino acids and peptides (>300 m/z).
+Differential analysis of metabolic features dominating the early/peak phase vs the late phase (Kruskal-wallis rank sum test; comparisons with adjusted BH p<0.05 are shown); The LC-MS peak area of each metabolite in samples collected in the early/peak phase (left side; circles) vs. samples collected during the late phase (triangles) coloured by their predicted as NPC pathway. Black errorbars represent standard deviations and circle/triangle the mean peak area of each feature.
 
 
 
