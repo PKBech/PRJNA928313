@@ -227,7 +227,7 @@ metadata_pseudo_counts_clr_dat_dist_eucledian$Phase <- factor(metadata_pseudo_co
 PERMANOVA <- adonis2(Metabolome_pseudo_counts_clr_dat_dist_eucledian ~ Phase * Replicate, metadata_pseudo_counts_clr_dat_dist_eucledian)
 PERMANOVA
 ```
-### Due to higher beta-dispersion between samples in the late phase compared to early phase (p-value = 0.002), the significant effect described by the successional phases on metabolome composition (PERMANOVA; R2 = 0.062, p-value = 0.002) may be somewhat attributed to group heterogeneity as well. 
+Due to higher beta-dispersion between samples in the late phase compared to early phase (p-value = 0.002), the significant effect described by the successional phases on metabolome composition (PERMANOVA; R2 = 0.062, p-value = 0.002) may be somewhat attributed to group heterogeneity as well. 
 
 
 ### PCOA plot with vegan/betadisper
@@ -425,7 +425,196 @@ for (i in 1:length(groups)) {
 data.frame(dunnTest_results_perDay$`Amino acids and Peptides`$res) %>% filter(P.adj < 0.05)
 
 ```
+###
+# Differential analysis
+Using Kruskal-Wallis rank sum test: Differences between the features between the early/peak and the late (grouping=Phase_major)
+```
+#Make long-format
+Phylo_metabolome_Early.Peak <- subset_samples(Phylo_metabolome, Phase_major == "Early")
+Phylo_metabolome_Late <- subset_samples(Phylo_metabolome, Phase_major == "Late")
 
+Phylo_metabolome_Early.Peak_dat <- as.data.frame(otu_table(Phylo_metabolome_Early.Peak))
+Phylo_metabolome_Early.Peak_dat$m.z <- rownames(Phylo_metabolome_Early.Peak_dat)
+Phylo_metabolome_Late_dat <- as.data.frame(otu_table(Phylo_metabolome_Late))
+Phylo_metabolome_Late_dat$m.z <- rownames(Phylo_metabolome_Late_dat)
+
+#Make long format
+Phylo_metabolome_Early.Peak_dat_long <- Phylo_metabolome_Early.Peak_dat %>% 
+  gather(key = "variable", value = "value", -m.z)
+
+Phylo_metabolome_Early.Peak_dat_long$Phase_major <- rep("Early")
+
+Phylo_metabolome_Late_dat_long <- Phylo_metabolome_Late_dat %>% 
+  gather(key = "variable", value = "value", -m.z)
+
+Phylo_metabolome_Late_dat_long$Phase_major <- rep("Late")
+
+Phylo_metabolome_dat_long <- rbind(Phylo_metabolome_Early.Peak_dat_long, 
+                                                     Phylo_metabolome_Late_dat_long)
+
+
+Phylo_metabolome_dat_long$Phase_major <- factor(Phylo_metabolome_dat_long$Phase_major , levels=c("Early", "Late"))
+head(Phylo_metabolome_dat_long)
+
+#Make Kruskal-wallis test for each feature
+
+
+results_kruskal.test <- by(Phylo_metabolome_dat_long, Phylo_metabolome_dat_long$m.z, 
+                           function(x) {
+                             test <- kruskal.test(x$value ~ as.factor(x$Phase_major))
+                             data.frame(statistic = test$statistic, p.value = test$p.value)
+                           })
+#make dataframe
+results_kruskal.test <- do.call("rbind", results_kruskal.test)
+results_kruskal.test$m.z <- rownames(results_kruskal.test)
+
+#P.adjusted values
+results_kruskal.test$p.adj <- p.adjust(results_kruskal.test$p.value,method = "BH")
+
+results_kruskal.test_sig <- results_kruskal.test %>% filter(p.adj < 0.05)
+
+#metadata table
+Phylo_metabolome_metadata <- as.data.frame(tax_table(Phylo_metabolome))[4:6]
+Phylo_metabolome_metadata$m.z <- rownames(Phylo_metabolome_metadata) 
+#join with metadata table
+results_kruskal.test_sig <- left_join(results_kruskal.test_sig, Phylo_metabolome_metadata) 
+
+#stat summary 
+#calculate mean
+Phylo_metabolome_dat_long_mean <- Phylo_metabolome_dat_long %>% group_by(Phase_major, m.z) %>% 
+  dplyr::summarise(mean=mean(value)) 
+
+Phylo_metabolome_dat_long_mean_max <- Phylo_metabolome_dat_long_mean %>% group_by(m.z) %>% 
+  dplyr::summarise(mean = max(mean))
+
+
+summary_mean_met <- left_join(Phylo_metabolome_dat_long_mean_max, Phylo_metabolome_dat_long_mean)
+
+#join with table telling if it is significant in the early/peak or late
+results_kruskal.test_sig <- left_join(results_kruskal.test_sig, summary_mean_met) 
+
+results_kruskal.test_sig
+
+results_kruskal.test_sig %>% group_by(Phase_major) %>% 
+  dplyr::summarise(n=n())
+
+results_kruskal.test_sig %>% group_by(Phase_major, NPC.pathway,m.z) %>% 
+  dplyr::summarise(n=n()) %>% head(.,20)
+
+```
+Prepare for mirrored beeswarm plot 
+```
+#Filter significant features from the phyloseq object:
+
+Phylo_metabolome_sig <- subset_taxa(Phylo_metabolome, mass %in% results_kruskal.test_sig$m.z)
+Phylo_metabolome_sig_Early.Peak <- subset_taxa(Phylo_metabolome, mass %in% results_kruskal.test_sig$m.z) %>% subset_samples(., Phase_major =="Early")
+Phylo_metabolome_sig_Late <- subset_taxa(Phylo_metabolome, mass %in% results_kruskal.test_sig$m.z) %>% subset_samples(., Phase_major =="Late")
+
+
+Phylo_metabolome_sig_Early.Peak_otutab <- as.data.frame(otu_table(Phylo_metabolome_sig_Early.Peak))
+Phylo_metabolome_sig_Early.Peak_otutab$m.z <- rownames(Phylo_metabolome_sig_Early.Peak_otutab)
+Phylo_metabolome_sig_Early.Peak_otutab_tax <- as.data.frame(tax_table(Phylo_metabolome_sig_Early.Peak)) %>% 
+  mutate(., m.z = rownames(.)) %>% left_join(Phylo_metabolome_sig_Early.Peak_otutab,.)
+
+
+
+Phylo_metabolome_sig_Late_otutab <- as.data.frame(otu_table(Phylo_metabolome_sig_Late))
+Phylo_metabolome_sig_Late_otutab$m.z <- rownames(Phylo_metabolome_sig_Late_otutab)
+Phylo_metabolome_sig_Late_otutab_tax <- as.data.frame(tax_table(Phylo_metabolome_sig_Late)) %>% 
+  mutate(., m.z = rownames(.)) %>% left_join(Phylo_metabolome_sig_Late_otutab,.)
+
+#Change to long format
+Phylo_metabolome_sig_Early.Peak_otutab_tax_long <- Phylo_metabolome_sig_Early.Peak_otutab_tax %>% 
+  gather(sample, values, -c(m.z, mass, molecularFormula, adduct, NPC.pathway, 
+                            NPC.superclass, NPC.class, ClassyFire.most.specific.class,
+                            ClassyFire.level.5,ClassyFire.subclass,ClassyFire.class,
+                            ClassyFire.superclass, ClassyFire.all.classifications))
+
+Phylo_metabolome_sig_Early.Peak_otutab_tax_long$Phase_Major <- rep("Early/Peak")
+
+Phylo_metabolome_sig_Late_otutab_tax_long <- Phylo_metabolome_sig_Late_otutab_tax %>% 
+  gather(sample, values, -c(m.z, mass, molecularFormula, adduct, NPC.pathway, 
+                            NPC.superclass, NPC.class, ClassyFire.most.specific.class,
+                            ClassyFire.level.5,ClassyFire.subclass,ClassyFire.class,
+                            ClassyFire.superclass, ClassyFire.all.classifications))
+
+
+Phylo_metabolome_sig_Late_otutab_tax_long$Phase_Major <- rep("Late")
+
+#Join both dataframes
+
+Phylo_metabolome_sig_otutab_tax_long <- rbind(Phylo_metabolome_sig_Early.Peak_otutab_tax_long, 
+                                              Phylo_metabolome_sig_Late_otutab_tax_long)
+
+Phylo_metabolome_sig_otutab_tax_long$Phase_Major <- factor(Phylo_metabolome_sig_otutab_tax_long$Phase_Major, levels= c("Early/Peak", "Late"))
+
+#Change Early/Peak values to negative values to mirror values across intercept:
+
+Phylo_metabolome_sig_otutab_tax_long$values <- ifelse(Phylo_metabolome_sig_otutab_tax_long$Phase_Major =="Early/Peak", -1*Phylo_metabolome_sig_otutab_tax_long$values, Phylo_metabolome_sig_otutab_tax_long$values)
+#Statistics
+p_values.stats = Phylo_metabolome_sig_otutab_tax_long %>%
+  dplyr::group_by(Phase_Major, m.z) %>%
+  dplyr::summarise(mean.values = mean(values),
+                   sd.values = sd(values),
+                   counts = n())
+
+colnames(Phylo_metabolome_sig_Late_otutab_tax)
+
+Phylo_metabolome_sig_otutab_tax_long_new <- left_join(Phylo_metabolome_sig_otutab_tax_long, p_values.stats[2:3])
+
+#Make levels of phase
+p_values.stats$Phase_Major = factor(p_values.stats$Phase_Major, levels= c("Early/Peak", "Late"))
+p_values.stats <- left_join(p_values.stats, Phylo_metabolome_sig_Late_otutab_tax[c(50,54)] , by = "m.z")
+
+
+p_values.stats <- left_join(p_values.stats, results_kruskal.test_sig[c(1,3:4)])
+p_values.stats$p.adj <- round(p_values.stats$p.adj, digits = 3)
+p_values.stats$p.adj <- ifelse(p_values.stats$p.adj==0, "p < 0.001", p_values.stats$p.adj)
+p_values.stats$p.adj <- ifelse(p_values.stats$p.adj!="p < 0.001", paste("p = ", p_values.stats$p.adj, sep = ""), p_values.stats$p.adj)
+p_values.stats$statistic <- round(p_values.stats$statistic, digits = 1)
+p_values.stats$statistic <- paste("chi-square = ", p_values.stats$statistic, sep = "")
+p_values.stats$kruskal.test <- paste(p_values.stats$statistic,p_values.stats$p.adj, sep = ", ")
+
+p_values.stats$kruskal.test <- ifelse(p_values.stats$Phase_Major=="Early/Peak", NA, p_values.stats$kruskal.test)
+p_values.stats$p.adj <- ifelse(p_values.stats$Phase_Major=="Early/Peak", NA, p_values.stats$p.adj)
+
+
+  library(ggbeeswarm)
+
+NPC.pathway_col <- c("#c439e3",  "#e3b039", "#e35b39", "#a8195a", "#240785", "#969696")
+
+
+Figure_4C <- p_values.stats %>%
+  ggplot(aes(y =reorder(m.z, -mean.values), x = mean.values)) + 
+  geom_vline(xintercept=0) +
+  geom_quasirandom(data = Phylo_metabolome_sig_otutab_tax_long_new,
+                 aes(x = values, shape = Phase_Major, col=NPC.pathway),
+                 size = 1.2,alpha = 0.7,  dodge.width=.4, width = 0.8) +
+  theme_bw(base_size = 10) +
+  geom_point(aes(shape = Phase_Major), size = 2, position=position_dodge(width=0.7)) +
+  geom_errorbar(aes(xmax = mean.values+sd.values, xmin = mean.values-sd.values), 
+                position=position_dodge2(0.7), width = 0.7, linewidth = 0.7, alpha=0.5) +  
+  xlab("LC-MS Peak Area") + ylab(expression(italic("m/z"))) + labs(color='NPC Pathway', shape = 'Phase') + 
+  scale_color_manual(values = NPC.pathway_col) +
+  geom_text(aes(label=p.adj), position=position_dodge(width=0.9), hjust=-0.5, vjust=-0.9, size = 3) +
+  #scale_fill_manual(values = main_col_phase_major) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        text = element_text(size = 15), 
+        #axis.title = element_text(colour = "black", face = "bold"),
+        
+        #axis.text = element_text(colour = "black", face = "bold"),
+        #legend.position = "none",
+        #legend.background = element_rect(linetype = 1, size = 0.5, colour = "lightgrey"),
+        #axis.text.x = element_text(angle = 45, vjust =1, hjust = 0.5)
+  )
+Figure_4C
+
+ggsave(file="Metabolome/Figures/Figure_4C.svg", plot=Figure_4C, width=11, height=6.5)
+```
+Significant dominating features in the early/peak phase vs. late phase.
+![PCoA](https://github.com/PKBech/PRJNA928313/blob/main/Metabolome/Figures/Figure_4C.png)
+
+Differential analysis of metabolic features dominating the early/peak phase vs the late phase (Kruskal-wallis rank sum test; comparisons with adjusted BH p<0.05 are shown); The LC-MS peak area of each metabolite in samples collected in the early/peak phase (left side; circles) vs. samples collected during the late phase (triangles) coloured by their predicted as NPC pathway. Black errorbars represent standard deviations and circle/triangle the mean peak area of each feature. D) Observed feature counts per day predicted as Amino acids and peptides (>300 m/z).
 
 
 
