@@ -13,9 +13,12 @@ done
 
 cat new_fasta_headers_MAGs/*fa > all_MAGs.fa
 
+#Make nucl databases
+#of MAGs
 makeblastdb -in all_MAGs.fa -out all_MAGs -parse_seqids -dbtype nucl
-
+#of the full co-assembly
 makeblastdb -in final.contigs.fa -out final.contigs -parse_seqids -dbtype nucl
 
-blastn -db all_MAGs -query ps_AD_filtered_succession_070622.fa -out AD_mapped_MAGs_070722.csv -outfmt 6 -num_threads 16
-blastn -db final.contigs -query ps_AD_filtered_succession_070622.fa -out AD_mapped_final.contigs_070722.csv -outfmt 6 -num_threads 16
+#Make blast
+blastn -db all_MAGs -query ps_AD_filtered_OBU99_succession.fa -out AD_mapped_MAGs.csv -outfmt 6 -num_threads 16
+blastn -db final.contigs -query ps_AD_filtered_OBU99_succession.fa -out AD_mapped_final.contigs.csv -outfmt 6 -num_threads 16
