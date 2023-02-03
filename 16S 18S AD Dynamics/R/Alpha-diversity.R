@@ -401,9 +401,9 @@ Figure_S2 = ggarrange(p_Shannon_16S,p_Shannon_18S, p_Shannon_AD,
                   corr_ADvs16S,corr_ADvs18S,corr_16Svs18S)
 
 
-ggsave(Figure_S2, file = "16S 18S AD Dynamics/Figures/Figure_S2.png", height = 16, width =18, units = "cm")
+#ggsave(Figure_S2, file = "16S 18S AD Dynamics/Figures/Figure_S2.png", height = 16, width =18, units = "cm")
 
-ggsave(legend.env, file = "16S 18S AD Dynamics/Figures/legend_Figure_S2.png", height = 1, width =7, units = "cm")
+#ggsave(legend.env, file = "16S 18S AD Dynamics/Figures/legend_Figure_S2.png", height = 1, width =7, units = "cm")
 
 
 #Linear model tested by emmeans ------
@@ -476,91 +476,91 @@ Observed_ADand16Sand18S_filter_norm_tab_filter_LMER_Obs18S_EM_stat <- contrast(O
 
 
 
-# ## Dunnett's test ----
-# #Make  Dunnest test with day 29 as "control"/ reference to all other points
-# 
-# #Make all combinations to individual groups
-# groups <- factor(paste(Observed_ADand16Sand18S_filter_norm_tab_filter$Subject,Observed_ADand16Sand18S_filter_norm_tab_filter$Time))
-# 
-# 
-# 
-# library(DescTools)
-# #ADs obs richness
-# DunnettTest_Day29_ObsAD <- DunnettTest(Observed_ADand16Sand18S_filter_norm_tab_filter$Obs_AD, groups, control = "Succession 29")
-# DunnettTest_Day29_ObsAD_dat <- as.data.frame(DunnettTest_Day29_ObsAD$`Succession 29`)
-# DunnettTest_Day29_ObsAD_dat$pval <- round(DunnettTest_Day29_ObsAD_dat$pval, digits = 3)
-# 
-# #Results ADs
-# # diff    lwr.ci     upr.ci  pval
-# # Seawater 10-Succession 29    -365.66667 -634.7135  -96.61981 0.002
-# # Seawater 113-Succession 29   -367.66667 -636.7135  -98.61981 0.001
-# # Seawater 15-Succession 29    -318.00000 -587.0469  -48.95314 0.010
-# # Seawater 23-Succession 29    -327.33333 -596.3802  -58.28648 0.007
-# # Seawater 29-Succession 29    -339.50000 -654.9854  -24.01460 0.026
-# # Seawater 44-Succession 29    -308.33333 -577.3802  -39.28648 0.013
-# # Seawater 57-Succession 29    -309.66667 -578.7135  -40.61981 0.013
-# # Seawater 71-Succession 29    -388.66667 -657.7135 -119.61981 0.001
-# # Seawater 85-Succession 29    -355.66667 -624.7135  -86.61981 0.002
-# # Seawater 99-Succession 29    -374.00000 -643.0469 -104.95314 0.001
-# # Succession 10-Succession 29  -224.66667 -414.9115  -34.42181 0.010
-# # Succession 113-Succession 29 -140.00000 -330.2449   50.24486 0.324
-# # Succession 15-Succession 29   -42.66667 -232.9115  147.57819 1.000
-# # Succession 23-Succession 29   -25.88889 -216.1337  164.35597 1.000
-# # Succession 44-Succession 29  -237.55556 -427.8004  -47.31070 0.005
-# # Succession 57-Succession 29  -250.85714 -454.2374  -47.47684 0.006
-# # Succession 71-Succession 29  -277.77778 -468.0226  -87.53292 0.000
-# # Succession 85-Succession 29  -318.55556 -508.8004 -128.31070 0.000
-# # Succession 99-Succession 29  -324.00000 -520.0999 -127.90009 0.000
-# 
-# #16S
-# DunnettTest_Day29_Obs16S <- DunnettTest(Observed_ADand16Sand18S_filter_norm_tab_filter$Obs_16S, groups, control = "Succession 29")
-# DunnettTest_Day29_Obs16S_dat <- as.data.frame(DunnettTest_Day29_Obs16S$`Succession 29`)
-# DunnettTest_Day29_Obs16S_dat$pval <- round(DunnettTest_Day29_Obs16S_dat$pval, digits = 3)
-# 
-# # diff      lwr.ci    upr.ci  pval
-# # Seawater 10-Succession 29    -1120.77778 -1728.76780 -512.7878 0.000
-# # Seawater 113-Succession 29   -1142.77778 -1750.76780 -534.7878 0.000
-# # Seawater 15-Succession 29    -1195.44444 -1803.43446 -587.4544 0.000
-# # Seawater 23-Succession 29    -1081.11111 -1689.10113 -473.1211 0.000
-# # Seawater 29-Succession 29    -1026.94444 -1739.87594 -314.0130 0.001
-# # Seawater 44-Succession 29    -1239.11111 -1847.10113 -631.1211 0.000
-# # Seawater 57-Succession 29     -872.44444 -1480.43446 -264.4544 0.001
-# # Seawater 71-Succession 29     -858.44444 -1466.43446 -250.4544 0.001
-# # Seawater 85-Succession 29    -1097.77778 -1705.76780 -489.7878 0.000
-# # Seawater 99-Succession 29    -1089.44444 -1697.43446 -481.4544 0.000
-# # Succession 10-Succession 29   -322.88889  -752.80276  107.0250 0.296
-# # Succession 113-Succession 29   450.11111    20.19724  880.0250 0.033
-# # Succession 15-Succession 29   -312.22222  -742.13609  117.6916 0.341
-# # Succession 23-Succession 29   -613.55556 -1043.46942 -183.6417 0.001
-# # Succession 44-Succession 29   -122.66667  -552.58053  307.2472 0.999
-# # Succession 57-Succession 29    232.12698  -227.47027  691.7242 0.832
-# # Succession 71-Succession 29    111.11111  -318.80276  541.0250 1.000
-# # Succession 85-Succession 29    -73.66667  -503.58053  356.2472 1.000
-# # Succession 99-Succession 29   -188.56944  -631.71451  254.5756 0.947
-# 
-# #And 18S
-# DunnettTest_Day23_Sha18S <- DunnettTest(Observed_ADand16Sand18S_filter_norm_tab_filter$Shannon_18S, groups, control = "Succession 23")
-# DunnettTest_Day23_Sha18S_dat <- as.data.frame(DunnettTest_Day23_Sha18S$`Succession 23`)
-# DunnettTest_Day23_Sha18S_dat$pval <- round(DunnettTest_Day23_Sha18S_dat$pval, digits = 3)
-# DunnettTest_Day23_Sha18S_dat
-# 
-# # diff    lwr.ci     upr.ci  pval
-# # Seawater 10-Succession 23    -278.111111 -617.6581   61.43587 0.194
-# # Seawater 113-Succession 23    -33.777778 -373.3248  305.76920 1.000
-# # Seawater 15-Succession 23    -302.777778 -642.3248   36.76920 0.117
-# # Seawater 23-Succession 23    -357.777778 -697.3248  -18.23080 0.032
-# # Seawater 29-Succession 23     -83.111111 -481.2652  315.04301 1.000
-# # Seawater 44-Succession 23    -268.444444 -607.9914   71.10253 0.233
-# # Seawater 57-Succession 23      37.888889 -301.6581  377.43587 1.000
-# # Seawater 71-Succession 23    -140.444444 -479.9914  199.10253 0.958
-# # Seawater 85-Succession 23       3.888889 -335.6581  343.43587 1.000
-# # Seawater 99-Succession 23    -117.444444 -456.9914  222.10253 0.992
-# # Succession 10-Succession 23   -61.333333 -301.4293  178.76264 1.000
-# # Succession 113-Succession 23   -8.888889 -248.9849  231.20708 1.000
-# # Succession 15-Succession 23    38.444444 -201.6515  278.54041 1.000
-# # Succession 29-Succession 23  -101.555556 -341.6515  138.54041 0.949
-# # Succession 44-Succession 23  -336.666667 -576.7626  -96.57070 0.001
-# # Succession 57-Succession 23  -123.682540 -380.3559  132.99085 0.873
-# # Succession 71-Succession 23  -317.444444 -557.5404  -77.34847 0.002
-# # Succession 85-Succession 23  -367.555556 -607.6515 -127.45959 0.000
-# # Succession 99-Succession 23  -145.861111 -393.3464  101.62415 0.647
+## Dunnett's test ----
+#Make  Dunnest test with day 29 as "control"/ reference to all other points
+
+#Make all combinations to individual groups
+groups <- factor(paste(Observed_ADand16Sand18S_filter_norm_tab_filter$Subject,Observed_ADand16Sand18S_filter_norm_tab_filter$Time))
+
+
+
+library(DescTools)
+#ADs obs richness
+DunnettTest_Day29_ObsAD <- DunnettTest(Observed_ADand16Sand18S_filter_norm_tab_filter$Obs_AD, groups, control = "Succession 29")
+DunnettTest_Day29_ObsAD_dat <- as.data.frame(DunnettTest_Day29_ObsAD$`Succession 29`)
+DunnettTest_Day29_ObsAD_dat$pval <- round(DunnettTest_Day29_ObsAD_dat$pval, digits = 3)
+DunnettTest_Day29_ObsAD_dat$p.adj <- p.adjust(DunnettTest_Day29_ObsAD_dat$pval, method = "BH")
+#Results ADs
+# diff    lwr.ci     upr.ci  pval
+# Seawater 10-Succession 29    -365.66667 -634.7135  -96.61981 0.002
+# Seawater 113-Succession 29   -367.66667 -636.7135  -98.61981 0.001
+# Seawater 15-Succession 29    -318.00000 -587.0469  -48.95314 0.010
+# Seawater 23-Succession 29    -327.33333 -596.3802  -58.28648 0.007
+# Seawater 29-Succession 29    -339.50000 -654.9854  -24.01460 0.026
+# Seawater 44-Succession 29    -308.33333 -577.3802  -39.28648 0.013
+# Seawater 57-Succession 29    -309.66667 -578.7135  -40.61981 0.013
+# Seawater 71-Succession 29    -388.66667 -657.7135 -119.61981 0.001
+# Seawater 85-Succession 29    -355.66667 -624.7135  -86.61981 0.002
+# Seawater 99-Succession 29    -374.00000 -643.0469 -104.95314 0.001
+# Succession 10-Succession 29  -224.66667 -414.9115  -34.42181 0.010
+# Succession 113-Succession 29 -140.00000 -330.2449   50.24486 0.324
+# Succession 15-Succession 29   -42.66667 -232.9115  147.57819 1.000
+# Succession 23-Succession 29   -25.88889 -216.1337  164.35597 1.000
+# Succession 44-Succession 29  -237.55556 -427.8004  -47.31070 0.005
+# Succession 57-Succession 29  -250.85714 -454.2374  -47.47684 0.006
+# Succession 71-Succession 29  -277.77778 -468.0226  -87.53292 0.000
+# Succession 85-Succession 29  -318.55556 -508.8004 -128.31070 0.000
+# Succession 99-Succession 29  -324.00000 -520.0999 -127.90009 0.000
+
+#16S
+DunnettTest_Day29_Obs16S <- DunnettTest(Observed_ADand16Sand18S_filter_norm_tab_filter$Obs_16S, groups, control = "Succession 29")
+DunnettTest_Day29_Obs16S_dat <- as.data.frame(DunnettTest_Day29_Obs16S$`Succession 29`)
+DunnettTest_Day29_Obs16S_dat$pval <- round(DunnettTest_Day29_Obs16S_dat$pval, digits = 3)
+
+# diff      lwr.ci    upr.ci  pval
+# Seawater 10-Succession 29    -1120.77778 -1728.76780 -512.7878 0.000
+# Seawater 113-Succession 29   -1142.77778 -1750.76780 -534.7878 0.000
+# Seawater 15-Succession 29    -1195.44444 -1803.43446 -587.4544 0.000
+# Seawater 23-Succession 29    -1081.11111 -1689.10113 -473.1211 0.000
+# Seawater 29-Succession 29    -1026.94444 -1739.87594 -314.0130 0.001
+# Seawater 44-Succession 29    -1239.11111 -1847.10113 -631.1211 0.000
+# Seawater 57-Succession 29     -872.44444 -1480.43446 -264.4544 0.001
+# Seawater 71-Succession 29     -858.44444 -1466.43446 -250.4544 0.001
+# Seawater 85-Succession 29    -1097.77778 -1705.76780 -489.7878 0.000
+# Seawater 99-Succession 29    -1089.44444 -1697.43446 -481.4544 0.000
+# Succession 10-Succession 29   -322.88889  -752.80276  107.0250 0.296
+# Succession 113-Succession 29   450.11111    20.19724  880.0250 0.033
+# Succession 15-Succession 29   -312.22222  -742.13609  117.6916 0.341
+# Succession 23-Succession 29   -613.55556 -1043.46942 -183.6417 0.001
+# Succession 44-Succession 29   -122.66667  -552.58053  307.2472 0.999
+# Succession 57-Succession 29    232.12698  -227.47027  691.7242 0.832
+# Succession 71-Succession 29    111.11111  -318.80276  541.0250 1.000
+# Succession 85-Succession 29    -73.66667  -503.58053  356.2472 1.000
+# Succession 99-Succession 29   -188.56944  -631.71451  254.5756 0.947
+
+#And 18S
+DunnettTest_Day23_Sha18S <- DunnettTest(Observed_ADand16Sand18S_filter_norm_tab_filter$Shannon_18S, groups, control = "Succession 23")
+DunnettTest_Day23_Sha18S_dat <- as.data.frame(DunnettTest_Day23_Sha18S$`Succession 23`)
+DunnettTest_Day23_Sha18S_dat$pval <- round(DunnettTest_Day23_Sha18S_dat$pval, digits = 3)
+DunnettTest_Day23_Sha18S_dat
+
+# diff    lwr.ci     upr.ci  pval
+# Seawater 10-Succession 23    -278.111111 -617.6581   61.43587 0.194
+# Seawater 113-Succession 23    -33.777778 -373.3248  305.76920 1.000
+# Seawater 15-Succession 23    -302.777778 -642.3248   36.76920 0.117
+# Seawater 23-Succession 23    -357.777778 -697.3248  -18.23080 0.032
+# Seawater 29-Succession 23     -83.111111 -481.2652  315.04301 1.000
+# Seawater 44-Succession 23    -268.444444 -607.9914   71.10253 0.233
+# Seawater 57-Succession 23      37.888889 -301.6581  377.43587 1.000
+# Seawater 71-Succession 23    -140.444444 -479.9914  199.10253 0.958
+# Seawater 85-Succession 23       3.888889 -335.6581  343.43587 1.000
+# Seawater 99-Succession 23    -117.444444 -456.9914  222.10253 0.992
+# Succession 10-Succession 23   -61.333333 -301.4293  178.76264 1.000
+# Succession 113-Succession 23   -8.888889 -248.9849  231.20708 1.000
+# Succession 15-Succession 23    38.444444 -201.6515  278.54041 1.000
+# Succession 29-Succession 23  -101.555556 -341.6515  138.54041 0.949
+# Succession 44-Succession 23  -336.666667 -576.7626  -96.57070 0.001
+# Succession 57-Succession 23  -123.682540 -380.3559  132.99085 0.873
+# Succession 71-Succession 23  -317.444444 -557.5404  -77.34847 0.002
+# Succession 85-Succession 23  -367.555556 -607.6515 -127.45959 0.000
+# Succession 99-Succession 23  -145.861111 -393.3464  101.62415 0.647
