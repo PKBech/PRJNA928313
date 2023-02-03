@@ -39,18 +39,18 @@ ps_18S_filtered <- ps_18S
 
 #### Pre-processing, normalizing and cleaning-up tables ####
 
+
 #Remove outliers
 outliers <- c("Succession-T1-6","Succession-T1-8","Succession-T2-9","Succession-T2-7")
 ps_AD_filtered_OBU99 <- subset_samples(ps_AD_filtered_OBU99, !sample_names(ps_AD_filtered_OBU99) %in% outliers)
 ps_16S_filtered <- subset_samples(ps_16S_filtered, !sample_names(ps_16S_filtered) %in% outliers)
 ps_18S_filtered <- subset_samples(ps_18S_filtered, !sample_names(ps_18S_filtered) %in% outliers)
 
-
 #Remove unwanted samples from AD and 16S
 unwanted_AD <- c("Bryozor","JH21")
-ps_AD_filter_norm <- subset_samples(ps_AD_filter_norm, !Subject %in% unwanted_AD)
+ps_AD_filtered_OBU99 <- subset_samples(ps_AD_filtered_OBU99, !Subject %in% unwanted_AD)
 unwanted_16S <- c("bryozoan","isolate")
-ps_16S_filter_norm <- subset_samples(ps_16S_filter_norm, !element.type %in% unwanted_16S)
+ps_16S_filtered <- subset_samples(ps_16S_filtered, !element.type %in% unwanted_16S)
 
 
 
@@ -91,7 +91,7 @@ P18S_filter_norm_dat_clean <- P18S_filter_norm_dat[rowSums(P18S_filter_norm_dat)
 
 #Match metadata table with rownames of X_filter_norm_dat_clean
 
-AD_filter_norm_meta_dat <- data.frame(sample_data(ps_AD_filter_norm))
+AD_filter_norm_meta_dat <- data.frame(sample_data(ps_AD_succession_filter_norm))
 #AD_filter_norm_meta_dat <- AD_succession_filter_norm_meta_dat
 AD_filter_norm_meta_dat <- AD_filter_norm_meta_dat[rownames(AD_filter_norm_dat_clean), ]
 
@@ -121,13 +121,13 @@ rownames(phases) <- phases$Sample
 #Join to all dataframes
 AD_filter_norm_meta_dat <- left_join(AD_filter_norm_meta_dat,phases, "Sample" )
 
-P16S_filter_norm_meta_dat <- data.frame(sample_data(ps_16S_filter_norm))
+P16S_filter_norm_meta_dat <- data.frame(sample_data(ps_16S_succession_filter_norm))
 P16S_filter_norm_meta_dat <- P16S_filter_norm_meta_dat[rownames(P16S_filter_norm_dat_clean), ]
 P16S_filter_norm_meta_dat <- P16S_filter_norm_meta_dat %>% mutate(Sample = rownames(P16S_filter_norm_meta_dat))
 P16S_filter_norm_meta_dat <- left_join(P16S_filter_norm_meta_dat,phases, "Sample" )
 
 
-P18S_filter_norm_meta_dat <- data.frame(sample_data(ps_18S_filter_norm))
+P18S_filter_norm_meta_dat <- data.frame(sample_data(ps_18S_succession_filter_norm))
 P18S_filter_norm_meta_dat <- P18S_filter_norm_meta_dat[rownames(P18S_filter_norm_dat_clean), ]
 P18S_filter_norm_meta_dat <- P18S_filter_norm_meta_dat %>% mutate(Sample = rownames(P18S_filter_norm_meta_dat))
 P18S_filter_norm_meta_dat <- left_join(P18S_filter_norm_meta_dat,phases, "Sample" )
@@ -234,7 +234,7 @@ cbind(PCoA.ord_16S, as.data.frame(AD_dist_bray_bdisp_phases$group[1:87]))
 
 protest(X = PCoA.ord_16S, Y = PCoA.ord_AD, scores = "sites", permutations = 999)
 #make data frame for procrustes residuals for 16S and AD procrustes
-str(procrustes(X = PCoA.ord_AD, Y = PCoA.ord_16S,symmetric=TRUE), kind = 2)
+str(procrustes(X = PCoA.ord_16S, Y = PCoA.ord_AD, symmetric=TRUE), kind = 2)
 
 
 residuals_dat_AD_16S <- as.data.frame(resid(procrustes(X = PCoA.ord_16S, Y = PCoA.ord_AD,symmetric=TRUE)))
