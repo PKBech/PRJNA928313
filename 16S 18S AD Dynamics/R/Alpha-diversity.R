@@ -45,6 +45,9 @@ ps_AD_filtered_OBU99 <- subset_samples(ps_AD_filtered_OBU99, !sample_names(ps_AD
 ps_16S_filtered <- subset_samples(ps_16S_filtered, !sample_names(ps_16S_filtered) %in% outliers)
 ps_18S_filtered <- subset_samples(ps_18S_filtered, !sample_names(ps_18S_filtered) %in% outliers)
 
+#Save ps_AD_filtered_OBU99 for mapping OBUs to metagenome:
+#saveRDS(ps_AD_filtered_OBU99, file = "Metagenomics/Data/ps_AD_filtered_OBU99.rds")
+
 #Scalling to total sum (100 000 reads)
 #All sample types PS
 ps_AD_filter_norm = transform_sample_counts(ps_AD_filtered_OBU99, function(x) 100000 * x/sum(x+0.1))
