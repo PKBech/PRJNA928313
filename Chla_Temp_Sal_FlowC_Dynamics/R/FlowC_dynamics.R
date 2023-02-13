@@ -33,7 +33,7 @@ str(metadata.bioelements)
 metadata.bioelements.stat = metadata.bioelements %>%
   dplyr::group_by(day, Phase) %>%
   dplyr::summarise(mean.t.abund = mean(T.abundance.per.element), 
-            sd = sd(T.abundance.per.element))
+                   sd = sd(T.abundance.per.element))
 str(metadata.bioelements.stat)
 
 ###################################
@@ -44,32 +44,32 @@ metadata.bioelements.stat$Phase = factor(metadata.bioelements.stat$Phase, levels
 metadata.bioelements$Phase = factor(metadata.bioelements$Phase, levels= c("Early", "Peak", "Late"))
 
 
-Abundance = ggplot(metadata.bioelements.stat, aes(x = day, y = mean.t.abund, col = Phase)) + 
-  geom_quasirandom(data = metadata.bioelements, aes(y=T.abundance.per.element),
-                   dodge.width=.1, cex=1, alpha = 0.5)+
-  geom_point(aes(x = day, y = mean.t.abund), size = 2.5, alpha = 1) +
-  geom_errorbar(aes(ymax = mean.t.abund-sd, ymin = mean.t.abund+sd),width = 0, 
-                size = 0.7, alpha = 0.5)+
-  xlab("")+ ylab("Log10(cells/element)\n")+
-  scale_x_continuous(breaks = c(3,7,10,15,23,29,44,57,71,85,99,113))+
-  theme_bw(base_size = 10)+
-  scale_color_manual(values = color_phase)+
-  scale_fill_manual(values = color_phase)+
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text.y = element_text(colour = "black", face = "bold"), 
-        axis.text.x = element_blank(),
-        axis.title.y = element_text(face = "bold", colour = "black"),
-        legend.position = "top",
-        legend.background = element_rect(linetype = 1, size = 0.5, colour = "lightgrey"))
-
-Abundance
+# Abundance = ggplot(metadata.bioelements.stat, aes(x = day, y = mean.t.abund, col = Phase)) + 
+#   geom_quasirandom(data = metadata.bioelements, aes(y=T.abundance.per.element),
+#                    dodge.width=.1, cex=1, alpha = 0.5)+
+#   geom_point(aes(x = day, y = mean.t.abund), size = 2.5, alpha = 1) +
+#   geom_errorbar(aes(ymax = mean.t.abund-sd, ymin = mean.t.abund+sd),width = 0, 
+#                 size = 0.7, alpha = 0.5)+
+#   xlab("")+ ylab("Log10(cells/element)\n")+
+#   scale_x_continuous(breaks = c(3,7,10,15,23,29,44,57,71,85,99,113))+
+#   theme_bw(base_size = 10)+
+#   scale_color_manual(values = color_phase)+
+#   scale_fill_manual(values = color_phase)+
+#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#         axis.text.y = element_text(colour = "black", face = "bold"), 
+#         axis.text.x = element_blank(),
+#         axis.title.y = element_text(face = "bold", colour = "black"),
+#         legend.position = "top",
+#         legend.background = element_rect(linetype = 1, size = 0.5, colour = "lightgrey"))
+# 
+# Abundance
 
 color_phase = c("#240785", "#e0b62b", "#f21395")
 
 Flow.C <- metadata.bioelements.stat %>%
   ggplot(aes(x = day, y = mean.t.abund, col = Phase)) + 
   geom_quasirandom(data = metadata.bioelements, aes(y=T.abundance.per.element, col = Phase), 
-                  ,size = 2, dodge.width=0, alpha = 0.6, stroke = NA) + 
+                   size = 2, dodge.width=0, alpha = 0.6, stroke = NA) + 
   geom_errorbar(aes(ymax = mean.t.abund-sd, ymin = mean.t.abund+sd, col = Phase), width = 0, linewidth = 0.7, alpha = 0.2)+
   geom_line(size = 1, alpha = 0.6, col = "black") +
   labs(x= "\nTime (days)", y = "Log10(cells/element)\n")+
@@ -80,13 +80,17 @@ Flow.C <- metadata.bioelements.stat %>%
   scale_fill_manual(values = color_phase)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(colour = "black", face = "bold"),
-        axis.title.x = element_text(margin = margin(t = -10)),
+        #axis.title.x = element_text(margin = margin(t = -10)),
         axis.text = element_text(colour = "black", face = "bold"),
         legend.position = "none",
         #legend.background = element_rect(linetype = 1, size = 0.5, colour = "lightgrey"),
-        axis.text.x = element_text(angle = 45, vjust =1, hjust = 0.5))
+        #axis.text.x = element_text(angle = 45, vjust =1, hjust = 0.5)
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank()
+  )
 
-ggsave(Flow.C, file = "Chla_Temp_Sal_FlowC_Dynamics/Figures/FlowC.svg", width=3.5, height=3)
+# ggsave(Flow.C, file = "Chla_Temp_Sal_FlowC_Dynamics/Figures/FlowC.svg", width=3.1, height=1.6)
+# ggsave(Flow.C, file = "Chla_Temp_Sal_FlowC_Dynamics/Figures/FlowC.png",  width=3.1, height=1.6)
 
 
 
