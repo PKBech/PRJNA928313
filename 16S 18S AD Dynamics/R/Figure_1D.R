@@ -66,5 +66,6 @@ Top3.18S = ggplot(df.18S, aes(x = as.factor(biorep), y = Abundance, fill = ASV))
         strip.text.x = element_text(face = "bold", size = 12)) +
   facet_wrap(.~day, strip.position="bottom", ncol =  12)
 
-ggsave(Top3.18S, file = "16S 18S AD Dynamics/Figures/Figure_1D.png", width = 13, height = 4)
+ggsave(Top3.18S, file = "16S 18S AD Dynamics/Figures/Figure_1D.png", width = 13, height = 3)
 
+ggsave(Top3.18S, file = "16S 18S AD Dynamics/Figures/Figure_1D.svg", width = 13, height = 3)
