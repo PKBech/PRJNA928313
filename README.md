@@ -3,7 +3,7 @@ Temporal dynamics of microbial community composition and secondary metabolite po
 
 Co-first authors: Pernille K Bech & Nathalie NSE Henriksen (2023) 
 
-Study in preparation...
+Study in preparation... Not all scripts are available yet
 
 
 ![](https://github.com/PKBech/PRJNA928313/blob/main/Metagenomics/Figures/itol_tree_080622.png)
