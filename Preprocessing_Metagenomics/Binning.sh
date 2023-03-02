@@ -69,5 +69,8 @@ for b in $sample_list
 
 anvi-merge <profile_1.db> <profile_2.db> <profile_3.db> <profile_4.db> <profile_5.db> -o MERGED_Profile --enforce-hierarchical-clustering -c CONTIGS.db 
 
+############################################
+#      Automatic bining with CONCOCT
+############################################
 
-
+anvi-cluster-contigs -p PROFILE.db -c CONTIGS.db -C CONCOCT --driver concoct --just-do-it -T 40 --clusters 10
