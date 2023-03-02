@@ -168,5 +168,15 @@ echo $FASTA
 # run megahit using preset meta-large since it is highly complex communities and the assembly will never finish if the preset are set to mega-sensitive
 megahit -r $FASTA -o megahit_co-assembly -t 40 --preset meta-large --min-contig-len 1000
 
+#############################################
+#     Add taxonomy infomation with Kaiju 
+# for supervised bining and refinement of bins
+############################################
+
+kaiju -t /path/to/kaiju/nodes.dmp -f /path/to/kaiju/nr_euk/kaiju_db_nr_euk.fmi -i gene_calls.fa -o gene_calls_nr.out -z 8 -v
+addTaxonNames -t /path/to/kaiju/nodes.dmp -n /path/to/kaiju/names.dmp -i gene_calls_nr.out -o gene_calls_nr.names -r superkingdom,phylum,order,class,family,genus,species
+anvi-import-taxonomy-for-genes -i gene_calls_nr.names -c CONTIGS.db -p kaiju --just-do-it
+
+
 
 
