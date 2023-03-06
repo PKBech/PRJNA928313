@@ -286,7 +286,7 @@ PERMANOVA <- adonis2(Metabolome_pseudo_counts_clr_dat_dist_eucledian ~ Phase * R
 PERMANOVA
 
 
-#PCOA plot with vegan/betadisper #####
+#PCoA plot with vegan/betadisper #####
 centroids.metabolome = data.frame(bdisp_metabolome_pseudo_counts_clr$centroids[,1:2])
 centroids.metabolome$Phase = rownames(centroids.metabolome)
 points.metabolome = data.frame(bdisp_metabolome_pseudo_counts_clr$vectors[,1:2], Phase = metadata_pseudo_counts_clr_dat_dist_eucledian$Phase)

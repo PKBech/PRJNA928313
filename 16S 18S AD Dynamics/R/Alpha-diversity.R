@@ -20,8 +20,8 @@ library(grid)
 library(lme4)
 library(emmeans)
 library(biomeUtils) # For clustering
-library(DECIPHER)
-library(speedyseq)
+# library(DECIPHER)
+# library(speedyseq)
 
 #### Load data ####
 #AD OBUs
@@ -59,6 +59,8 @@ unwanted_AD <- c("Bryozor","JH21")
 ps_AD_filter_norm <- subset_samples(ps_AD_filter_norm, !Subject %in% unwanted_AD)
 unwanted_16S <- c("bryozoan","isolate")
 ps_16S_filter_norm <- subset_samples(ps_16S_filter_norm, !element.type %in% unwanted_16S)
+
+
 
 
 #### Richness/alpha-diversity ####
