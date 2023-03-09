@@ -1,6 +1,6 @@
 This Github repository includes the analytical and statistical procedures to generate results that are reported in Bech et al. 2023 (unpublished). 
 
-### BioProject Ass. PRJNA928313
+BioProject accession no. PRJNA928313
 # Succession of microbial community composition mirrors the secondary metabolite potential during marine biofilm development
 
 ### Authors: Pernille Kjersgaard Bech<sup>1, *#</sup>, Scott Alexander Jarmusch<sup>1</sup>, Jacob Agerbo Rasmussen<sup>2</sup>, Lone Gram<sup>1</sup>, Nathalie Nina Suhr Eiris Henriksen<sup>1, *#</sup>
