@@ -1,7 +1,16 @@
 ### PRJNA928313
 # Succession of microbial community composition mirrors the secondary metabolite potential during marine biofilm development
 
-### Pernille Kjersgaard Bech1,Scott Alexander Jarmusch, Jacob Agerbo Rasmussen, Lone Gram, Nathalie Nina Suhr Eiris Henriksen
+### Authors: Pernille Kjersgaard Bech, Scott Alexander Jarmusch, Jacob Agerbo Rasmussen, Lone Gram, Nathalie Nina Suhr Eiris Henriksen
+
+Pernille Kjersgaard Bech1,*#, Scott Alexander Jarmusch1, Jacob Agerbo Rasmussen2, Lone Gram1, Nathalie Nina Suhr Eiris Henriksen1,*#
+
+1. Department of Biotechnology and Biomedicine, Technical University of Denmark, Søltofts Plads, Bldg. 221, DK-2800 Kgs. Lyngby Denmark
+2. Globe Institute, Copenhagen University, Øster Farimagsgade 5, DK.1014 København K
+
+* These authors contributed equally to this work
+#Corresponding authors: nasuh@dtu.dk, perbec@dtu.dk 
+
 
 ## Abstract:
 
