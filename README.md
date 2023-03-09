@@ -1,13 +1,18 @@
-# PRJNA928313
-Temporal dynamics of microbial community composition and secondary metabolite potential during marine biofilm development
+### PRJNA928313
+# Succession of microbial community composition mirrors the secondary metabolite potential during marine biofilm development
 
-Co-first authors: Pernille K Bech & Nathalie NSE Henriksen (2023) 
+### Pernille Kjersgaard Bech1,Scott Alexander Jarmusch, Jacob Agerbo Rasmussen, Lone Gram, Nathalie Nina Suhr Eiris Henriksen
 
-Study in preparation... Not all scripts are available yet
+## Abstract:
+
+In nature, secondary metabolites allow microorganisms to interact with other community members, however, the degree to which community dynamics can be linked to secondary metabolite potential remains largely unknown. In this study, we address a fundamental problem in microbial community ecology, namely the interplay between community succession and secondary metabolism variation. We used 16S- 18S-rRNA gene and adenylation domain amplicon sequencing, genome-resolved metagenomics, and untargeted metabolomics to track the taxons, biosynthetic gene clusters (BGCs) and metabolome dynamics in situ of microorganisms during marine biofilm succession over 113 days. Two succession phases were identified during the community succession, with a clear successional shift around day 29, where the alkaloid quorum sensing related molecules, pseudanes also were detected. The microbial secondary metabolite potential changed between the succession phases and only a few community members, including Myxococotta spp, were responsible for the majority of the BGC potential in the early succession phase. In the late succession, bryozoans and benthic copepoda arrived, the microbial non-ribosomal peptide (NRP) potential drastically decreased as a result of the elimination of the prolific secondary metabolite producers. Conclusively, this study suggests that the early succession of the marine biofilm community favors prokaryotes with high NRPS potential, while the late succession are dominated by multicellular eukaryotes and a reduction in bacterial NRPS potential. 
+
+
+
+
 
 
 ![](https://github.com/PKBech/PRJNA928313/blob/main/Metagenomics/Figures/itol_tree_080622.png)
 
-ORCID nr.: 
-PKB: 0000-0002-6028-9382;
-NNSEH: 0000-0002-6588-6346
+
+
