@@ -1,4 +1,4 @@
-### PRJNA928313
+### BioProject Ass. PRJNA928313
 # Succession of microbial community composition mirrors the secondary metabolite potential during marine biofilm development
 
 ### Authors: Pernille Kjersgaard Bech<sup>1, *#</sup>, Scott Alexander Jarmusch<sup>1</sup>, Jacob Agerbo Rasmussen<sup>2</sup>, Lone Gram<sup>1</sup>, Nathalie Nina Suhr Eiris Henriksen<sup>1, *#</sup>
