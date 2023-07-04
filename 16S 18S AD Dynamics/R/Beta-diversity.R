@@ -132,6 +132,11 @@ P18S_filter_norm_meta_dat <- P18S_filter_norm_meta_dat[rownames(P18S_filter_norm
 P18S_filter_norm_meta_dat <- P18S_filter_norm_meta_dat %>% mutate(Sample = rownames(P18S_filter_norm_meta_dat))
 P18S_filter_norm_meta_dat <- left_join(P18S_filter_norm_meta_dat,phases, "Sample" )
 
+#Sampling sizes:
+AD_filter_norm_meta_dat %>% group_by(phases) %>% dplyr::summarise(n=n()) 
+P16S_filter_norm_meta_dat %>% group_by(phases) %>% dplyr::summarise(n=n()) 
+P18S_filter_norm_meta_dat %>% group_by(phases) %>% dplyr::summarise(n=n()) 
+
 
 #Bray-curtis distance matrix
 AD_dist_bray = as.matrix((vegdist((AD_filter_norm_dat_clean), "bray")))

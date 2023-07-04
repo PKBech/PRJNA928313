@@ -193,7 +193,10 @@ Phylo_metabolome <- subset_taxa(Phylo_metabolome, mass > 300 & NPC.pathway != "F
 Phylo_metabolome <- subset_taxa(Phylo_metabolome, NPC.pathway != "Fatty acids" & NPC.superclass != "Lignans")
 Phylo_metabolome_NRPs <- subset_taxa(Phylo_metabolome, NPC.pathway == "Amino acids and Peptides")
 
+#Sample size:
 
+as.data.frame(sample_data(Phylo_metabolome)) %>% group_by(Phase) %>% 
+  dplyr::summarise(n=n())
 #Zero's across dataset #####
 library(zCompositions)
 
